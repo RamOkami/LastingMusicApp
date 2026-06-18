@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  
+  body {
+    font-family: var(--font-sans);
+    @apply bg-neutral-950 text-neutral-100 antialiased selection:bg-white selection:text-black transition-colors duration-300;
+  }
+}
+
+/* Custom glassmorphism and card animations */
+.glass-panel {
+  @apply bg-neutral-900/40 backdrop-blur-md border border-neutral-800/60;
+}
+
+.glass-card {
+  @apply bg-neutral-900/30 backdrop-blur-sm border border-neutral-800/40 hover:border-neutral-700/80 transition-all duration-300;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-neutral-800 rounded-full hover:bg-neutral-700 transition-colors;
+}
+
+/* CD spin animation */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
+/* Custom gradients */
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-neutral-300 to-neutral-500;
+}
+
+.gradient-bg {
+  @apply bg-gradient-to-br from-neutral-900 via-neutral-950 to-neutral-900;
+}
+
