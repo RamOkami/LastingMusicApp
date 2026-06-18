@@ -51,3 +51,10 @@ Paso 2
 ```
 npm run dev
 ```
+
+## Deploy a Github Pages
+(IMPORTANTE) - El comando hace Deploy instantaneo de cualquier Push a la rama main luego de ejecutarse.
+
+```
+npm run deploy
+```
