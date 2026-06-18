@@ -8,6 +8,7 @@ Una plataforma web e-commerce para la compra de Cd's de musica a nivel nacional 
   <img src="LastingMusicFront/public/LastingMusicReadme.png" width="800">
 </p>
 
+## Directorio de App
 
 ```
 Directory structure:
