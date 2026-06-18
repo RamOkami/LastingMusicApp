@@ -1,6 +1,14 @@
 # LastingMusicApp
 Repositorio para la pagina e-commerce de LastingMusic
 
+###  [LastingMusicApp](https://ramokami.github.io/LastingMusicApp/)
+Una plataforma web e-commerce para la compra de Cd's de musica a nivel nacional (Chile), con el objetivo de expandir y facilitar la compra de musica en formato fisico.
+
+<p align="center">
+  <img src="../LastingMusicApp/LastingMusicFront/public/LastingMusicReadme.png" width="800">
+</p>
+
+
 ```
 Directory structure:
 └── ramokami-lastingmusicapp/
