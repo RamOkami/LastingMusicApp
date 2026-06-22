@@ -1,5 +1,5 @@
-import React from 'react';
-import { ShoppingBag, User, LogOut } from 'lucide-react';
+import React, { useState } from 'react';
+import { ShoppingBag, User, LogOut, Menu, X } from 'lucide-react';
 import logoWhite from '../assets/IconLastingMusicBlanco.png';
 
 export default function Navbar({ 
@@ -11,6 +11,12 @@ export default function Navbar({
   onLoginClick,
   onLogout
 }) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleNavClick = (section) => {
+    setActiveSection(section);
+    setIsMobileMenuOpen(false);
+  };
   return (
     <header className="sticky top-0 z-40 border-b bg-neutral-950/80 border-neutral-900 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
@@ -105,7 +111,7 @@ export default function Navbar({
           
           {/* User Profile / Login trigger */}
           {currentUser ? (
-            <div className="flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-3">
               {/* Profile icon (quick link) */}
               <button
                 onClick={() => setActiveSection('profile')}
@@ -149,8 +155,102 @@ export default function Navbar({
               </span>
             )}
           </button>
+
+          {/* Hamburger Menu Button */}
+          {currentUser && (
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2.5 rounded-full border border-neutral-800 bg-neutral-900/40 text-neutral-200 hover:bg-white hover:text-black transition-all cursor-pointer md:hidden"
+              aria-label="Abrir menú de navegación"
+              aria-expanded={isMobileMenuOpen}
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-4.5 h-4.5 transition-transform duration-200" />
+              ) : (
+                <Menu className="w-4.5 h-4.5 transition-transform duration-200" />
+              )}
+            </button>
+          )}
         </div>
       </div>
+
+      {/* Mobile Menu Dropdown */}
+      {currentUser && isMobileMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 right-0 border-b border-neutral-900 bg-neutral-950/95 backdrop-blur-lg shadow-2xl animate-in slide-in-from-top duration-200">
+          <div className="px-4 py-4 space-y-3">
+            {/* User Info header inside menu */}
+            <div className="px-3 py-2 border-b border-neutral-900 mb-2">
+              <p className="text-xs text-neutral-500 uppercase tracking-wider font-semibold">Usuario</p>
+              <p className="text-sm font-medium text-neutral-200 truncate">{currentUser.name}</p>
+              <p className="text-xs text-neutral-400 truncate">{currentUser.email}</p>
+            </div>
+
+            <button 
+              onClick={() => handleNavClick('store')}
+              className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium tracking-wide uppercase transition-all flex items-center justify-between cursor-pointer ${
+                activeSection === 'store' 
+                  ? 'bg-white/10 text-white font-semibold' 
+                  : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+              }`}
+            >
+              <span>Tienda</span>
+              {activeSection === 'store' && <span className="w-1.5 h-1.5 bg-white rounded-full"></span>}
+            </button>
+            
+            <button 
+              onClick={() => handleNavClick('orders')}
+              className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium tracking-wide uppercase transition-all flex items-center justify-between cursor-pointer ${
+                activeSection === 'orders' 
+                  ? 'bg-white/10 text-white font-semibold' 
+                  : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+              }`}
+            >
+              <span>Mis Pedidos</span>
+              {activeSection === 'orders' && <span className="w-1.5 h-1.5 bg-white rounded-full"></span>}
+            </button>
+
+            <button 
+              onClick={() => handleNavClick('profile')}
+              className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium tracking-wide uppercase transition-all flex items-center justify-between cursor-pointer ${
+                activeSection === 'profile' 
+                  ? 'bg-white/10 text-white font-semibold' 
+                  : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+              }`}
+            >
+              <span>Mi Perfil</span>
+              {activeSection === 'profile' && <span className="w-1.5 h-1.5 bg-white rounded-full"></span>}
+            </button>
+
+            {currentUser?.role === 'admin' && (
+              <button 
+                onClick={() => handleNavClick('admin')}
+                className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium tracking-wide uppercase transition-all flex items-center justify-between cursor-pointer ${
+                  activeSection === 'admin' 
+                    ? 'bg-white/10 text-white font-semibold' 
+                    : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+                }`}
+              >
+                <span>Panel Admin</span>
+                {activeSection === 'admin' && <span className="w-1.5 h-1.5 bg-white rounded-full"></span>}
+              </button>
+            )}
+
+            {/* Logout button in mobile menu */}
+            <div className="pt-2 border-t border-neutral-900">
+              <button
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  onLogout();
+                }}
+                className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium tracking-wide uppercase text-red-400 hover:bg-red-950/20 hover:text-red-300 transition-all flex items-center gap-2 cursor-pointer"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>Cerrar Sesión</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
